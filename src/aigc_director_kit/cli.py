@@ -1,4 +1,4 @@
-"""Command-line interface for AIGC Director Kit."""
+"""Command-line interface for CineThread."""
 
 from __future__ import annotations
 

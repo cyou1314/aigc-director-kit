@@ -1,4 +1,4 @@
-# AIGC Director Kit 工作规则
+# CineThread 工作规则
 
 ## 项目边界
 
