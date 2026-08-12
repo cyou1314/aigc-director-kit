@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:aigc-director-kit:runtime-handoff:v1",
+  "title": "AIGC Director Runtime Handoff v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["contract", "version", "valid", "project", "validation", "runtime", "evidence"],
+  "properties": {
+    "contract": {"const": "aigc-director-runtime-handoff"},
+    "version": {"const": 1},
+    "valid": {"type": "boolean"},
+    "project": {"type": ["string", "null"]},
+    "validation": {"type": "object"},
+    "shot_plan": {"type": ["object", "null"]},
+    "prompt_pack": {"type": ["object", "null"]},
+    "compiled_action_requests": {"type": "array"},
+    "runtime": {"$ref": "#/$defs/runtime"},
+    "evidence": {"$ref": "#/$defs/evidence"}
+  },
+  "$defs": {
+    "runtime": {
+      "type": "object",
+      "required": ["adapter", "mode", "executed", "required_next_steps"],
+      "properties": {
+        "adapter": {"type": "string", "minLength": 1},
+        "mode": {"const": "dry-run"},
+        "executed": {"const": false},
+        "required_next_steps": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["contract_validation", "render_status", "qc_status"],
+      "properties": {
+        "contract_validation": {"enum": ["passed", "failed"]},
+        "render_status": {"const": "not_run"},
+        "qc_status": {"type": "string"}
+      }
+    }
+  }
+}

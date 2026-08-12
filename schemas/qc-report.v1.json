@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:aigc-director-kit:qc-report:v1",
+  "title": "AIGC Director QC Evidence Report v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["contract", "version", "project", "artifact", "overall_status", "checks"],
+  "properties": {
+    "contract": {"const": "aigc-director-qc-report"},
+    "version": {"const": 1},
+    "project": {"type": "string", "minLength": 1},
+    "artifact": {"$ref": "#/$defs/artifact"},
+    "overall_status": {"enum": ["pass", "fail", "unverified", "not_run"]},
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {"$ref": "#/$defs/check"}
+    },
+    "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "source_shot_ids": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "evidence": {"enum": ["observed", "inferred", "designed"]},
+    "artifact": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["label", "available"],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "available": {"type": "boolean"}
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "status", "evidence", "notes"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"},
+        "status": {"enum": ["pass", "fail", "unverified", "not_run"]},
+        "evidence": {"$ref": "#/$defs/evidence"},
+        "notes": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

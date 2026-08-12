@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- Added the `aigc-director-skill-workflow` handoff contract and schema.
+- Added `validate-workflow` for structural validation and deterministic action dry-runs.
+- Added a sanitized multi-Skill workflow example, documentation, and regression tests.
+- Added `aigc-director-prompt-pack` validation for global rules and shot-specific prompt deltas.
+- Added `aigc-director-qc-report` validation that separates observed evidence from unverified claims.
+- Added `aigc-director-runtime-handoff` and `build-runtime-handoff` for optional adapter consumption.
+- Improved the Windows example runner with an explicit Python override and common install-path fallback.
+
 ## [0.1.4] - 2026-08-12
 
 - Added two sanitized cases derived from real local previs forward tests.

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:aigc-director-kit:skill-workflow:v1",
+  "title": "AIGC Director Skill Workflow Handoff v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["contract", "version", "project", "stages", "shot_plan"],
+  "properties": {
+    "contract": {"const": "aigc-director-skill-workflow"},
+    "version": {"const": 1},
+    "project": {"type": "string", "minLength": 1},
+    "stages": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "items": {"$ref": "#/$defs/stage"}
+    },
+    "shot_plan": {"$ref": "./shot-plan.v1.json"},
+    "prompt_pack": {"$ref": "./prompt-pack.v1.json"},
+    "qc_report": {"$ref": "./qc-report.v1.json"},
+    "action_requests": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {"$ref": "#/$defs/actionRequest"}
+    },
+    "handoff": {"$ref": "#/$defs/handoff"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"},
+    "evidence": {"enum": ["observed", "inferred", "designed"]},
+    "stage": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "skill", "role", "output", "evidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "skill": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1},
+        "output": {"type": "string", "minLength": 1},
+        "evidence": {"$ref": "#/$defs/evidence"},
+        "status": {"enum": ["draft", "validated", "unverified"]}
+      }
+    },
+    "actionRequest": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["shot_id", "stage_id", "text", "evidence"],
+      "properties": {
+        "shot_id": {"type": "string", "minLength": 1},
+        "stage_id": {"$ref": "#/$defs/id"},
+        "text": {"type": "string", "minLength": 1},
+        "evidence": {"$ref": "#/$defs/evidence"}
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "next_adapter": {"type": "string", "minLength": 1},
+        "constraints": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "unverified": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    }
+  }
+}

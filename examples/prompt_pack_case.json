@@ -1,0 +1,37 @@
+{
+  "contract": "aigc-director-prompt-pack",
+  "version": 1,
+  "project": "sanitized-one-take-previs",
+  "global_rules": {
+    "character_anchors": [
+      "Keep the hero identity, silhouette, wardrobe, and prop state unchanged."
+    ],
+    "scene_anchors": [
+      "Preserve the platform axis and the forward-facing spatial relationship."
+    ],
+    "style": "Clean low-poly previs with readable staging and restrained detail.",
+    "stability": [
+      "Preserve the first-frame composition and the settled outgoing state."
+    ],
+    "avoid": [
+      "Do not invent dialogue, extra choreography, or an unverified final-render claim."
+    ]
+  },
+  "shots": [
+    {
+      "shot_id": "S01",
+      "source_shot_id": "S01",
+      "duration_s": 4.0,
+      "primary_task": "Establish the space and compress attention onto the hero's decision.",
+      "action_causality": "The hero moves forward from the established space and settles on the platform axis.",
+      "camera_job": "Dolly from spatial context toward the hero while keeping the endpoint readable.",
+      "entry_state": {"actors": ["hero"], "movement": "forward"},
+      "exit_state": {"actors": ["hero"], "movement": "settled-forward", "screen_position": "near-center"},
+      "prompt": "One continuous 4-second previs take. Establish the platform and the hero in space, dolly steadily toward the hero as attention compresses onto the forward decision, then settle with the hero near frame center on the platform axis. Preserve identity, silhouette, wardrobe, prop state, screen direction, and the readable outgoing endpoint. No dialogue, extra choreography, or invented camera movement.",
+      "evidence": "designed",
+      "revision_notes": [
+        "Keep one primary action and one dominant camera job."
+      ]
+    }
+  ]
+}

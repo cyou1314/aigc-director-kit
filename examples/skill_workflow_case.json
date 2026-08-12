@@ -1,0 +1,80 @@
+{
+  "contract": "aigc-director-skill-workflow",
+  "version": 1,
+  "project": "skill-workflow-demo",
+  "stages": [
+    {
+      "id": "direction",
+      "skill": "aigc-manga-video-director",
+      "role": "turn visual direction into a shot contract",
+      "output": "aigc-director-shot-plan",
+      "evidence": "designed",
+      "status": "validated"
+    },
+    {
+      "id": "action-bridge",
+      "skill": "audio-to-prompt",
+      "role": "turn pacing and action intent into a bounded request",
+      "output": "aigc-director-action-request",
+      "evidence": "inferred",
+      "status": "validated"
+    },
+    {
+      "id": "coordination",
+      "skill": "aigc-project-prompt-loop",
+      "role": "sequence the handoff and preserve evidence boundaries",
+      "output": "aigc-director-skill-workflow",
+      "evidence": "designed",
+      "status": "validated"
+    }
+  ],
+  "shot_plan": {
+    "contract": "aigc-director-shot-plan",
+    "version": 1,
+    "project": "skill-workflow-demo",
+    "fps": 24,
+    "resolution": {"width": 640, "height": 360},
+    "shots": [
+      {
+        "id": "S01",
+        "duration_s": 4.0,
+        "intent": "Establish the subject and end on a readable forward decision.",
+        "evidence": "designed",
+        "entry_state": {"actors": ["hero"], "movement": "forward"},
+        "exit_state": {"actors": ["hero"], "movement": "settled-forward"},
+        "attention_order": ["hero", "platform"],
+        "beats": ["establish", "decision", "settle"],
+        "continuous_take": true,
+        "camera": {
+          "rig": "dolly",
+          "job": "Move from spatial context toward the subject decision.",
+          "focal_length_mm": 35.0,
+          "path": [
+            {"time_s": 0.0, "position": [4.2, -7.5, 3.4], "look_at": [0.0, 1.5, 1.25]},
+            {"time_s": 4.0, "position": [2.5, -3.8, 2.15], "look_at": [0.0, 2.25, 1.35]}
+          ]
+        },
+        "next_handle": "Keep the subject near center and settled on the forward axis."
+      }
+    ]
+  },
+  "action_requests": [
+    {
+      "shot_id": "S01",
+      "stage_id": "action-bridge",
+      "text": "run quick stop, blend 0.2s, fast, in place",
+      "evidence": "inferred"
+    }
+  ],
+  "handoff": {
+    "next_adapter": "optional-runtime-adapter",
+    "constraints": [
+      "Use only action ids returned by compile-action.",
+      "Keep shot entry and exit states unchanged until a real render is verified."
+    ],
+    "unverified": [
+      "Final video quality",
+      "Actual motion asset mapping"
+    ]
+  }
+}

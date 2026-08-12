@@ -1,0 +1,35 @@
+{
+  "contract": "aigc-director-qc-report",
+  "version": 1,
+  "project": "sanitized-one-take-previs",
+  "artifact": {
+    "label": "No rendered video supplied; contract-only example",
+    "available": false
+  },
+  "overall_status": "unverified",
+  "source_shot_ids": ["S01"],
+  "checks": [
+    {
+      "id": "shot-contract",
+      "status": "not_run",
+      "evidence": "designed",
+      "notes": "The shot contract can be validated separately, but no render was inspected."
+    },
+    {
+      "id": "continuity",
+      "status": "unverified",
+      "evidence": "inferred",
+      "notes": "Continuity remains unverified until an actual clip and its tail frame are reviewed."
+    },
+    {
+      "id": "lip-sync",
+      "status": "not_run",
+      "evidence": "designed",
+      "notes": "No dialogue or audio evidence is present in this example."
+    }
+  ],
+  "limitations": [
+    "This report does not inspect a video, audio track, or rendered frame.",
+    "Contract validation is not final visual or audio quality approval."
+  ]
+}

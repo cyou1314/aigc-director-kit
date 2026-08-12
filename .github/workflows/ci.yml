@@ -38,8 +38,15 @@ jobs:
           python -m aigc_director_kit validate-plan examples/one_take_previs_case.json --json
           python -m aigc_director_kit validate-plan examples/film_contract_handoff_case.json --json
           python -m aigc_director_kit validate-plan examples/multi_actor_prop_case.json --json
-          python -m aigc_director_kit list-actions --library examples/action_library.json --query 跑
-          python -m aigc_director_kit compile-action --library examples/action_library.json --text "快速跑步然后急停，过渡0.2秒，原地"
+          python -m aigc_director_kit list-actions --library examples/action_library.json --query run
+          python -m aigc_director_kit compile-action --library examples/action_library.json --text "run quick stop, blend 0.2s, fast, in place"
+
+      - name: Validate workflow, prompt, and QC contracts
+        run: |
+          python -m aigc_director_kit validate-workflow examples/skill_workflow_case.json --library examples/action_library.json --json
+          python -m aigc_director_kit validate-prompt-pack examples/prompt_pack_case.json --plan examples/one_take_previs_case.json --json
+          python -m aigc_director_kit validate-qc-report examples/qc_report_unverified_case.json --json
+          python -m aigc_director_kit build-runtime-handoff examples/skill_workflow_case.json --library examples/action_library.json --adapter optional-runtime-adapter --json
 
       - name: Check source and JSON files
         run: |

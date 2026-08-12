@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:aigc-director-kit:prompt-pack:v1",
+  "title": "AIGC Director Prompt Pack v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["contract", "version", "project", "global_rules", "shots"],
+  "properties": {
+    "contract": {"const": "aigc-director-prompt-pack"},
+    "version": {"const": 1},
+    "project": {"type": "string", "minLength": 1},
+    "global_rules": {"$ref": "#/$defs/globalRules"},
+    "shots": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {"$ref": "#/$defs/shotPrompt"}
+    }
+  },
+  "$defs": {
+    "state": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "object", "minProperties": 1}]},
+    "evidence": {"enum": ["observed", "inferred", "designed"]},
+    "globalRules": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "character_anchors": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "scene_anchors": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "style": {"type": "string", "minLength": 1},
+        "stability": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "avoid": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "shotPrompt": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "shot_id",
+        "duration_s",
+        "primary_task",
+        "action_causality",
+        "camera_job",
+        "entry_state",
+        "exit_state",
+        "prompt",
+        "evidence"
+      ],
+      "properties": {
+        "shot_id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"},
+        "source_shot_id": {"type": "string", "minLength": 1},
+        "source_panel": {"type": "string", "minLength": 1},
+        "duration_s": {"type": "number", "minimum": 0.25, "maximum": 60},
+        "primary_task": {"type": "string", "minLength": 1},
+        "action_causality": {"type": "string", "minLength": 1},
+        "camera_job": {"type": "string", "minLength": 1},
+        "entry_state": {"$ref": "#/$defs/state"},
+        "exit_state": {"$ref": "#/$defs/state"},
+        "prompt": {"type": "string", "minLength": 1, "maxLength": 20000},
+        "evidence": {"$ref": "#/$defs/evidence"},
+        "revision_notes": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    }
+  }
+}
