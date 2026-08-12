@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [0.2.0] - 2026-08-12
 
 - Added the `aigc-director-skill-workflow` handoff contract and schema.
 - Added `validate-workflow` for structural validation and deterministic action dry-runs.
