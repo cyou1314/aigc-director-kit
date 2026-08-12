@@ -1,4 +1,4 @@
-# Changelog
+# CineThread Changelog
 
 ## [0.2.0] - 2026-08-12
 
@@ -9,6 +9,7 @@
 - Added `aigc-director-qc-report` validation that separates observed evidence from unverified claims.
 - Added `aigc-director-runtime-handoff` and `build-runtime-handoff` for optional adapter consumption.
 - Improved the Windows example runner with an explicit Python override and common install-path fallback.
+- Rebranded the public project as CineThread while retaining the technical package and CLI identifiers.
 
 ## [0.1.4] - 2026-08-12
 

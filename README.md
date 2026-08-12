@@ -1,4 +1,10 @@
-# AIGC Director Kit
+# CineThread
+
+> Deterministic creative handoffs for AI animation, storyboards, and previs.
+
+`CineThread` is the public product name. The Python package, CLI command, and
+versioned JSON contract identifiers remain `aigc-director-kit` in the 0.x
+series for compatibility.
 
 ## Skill workflow handoff
 
@@ -48,7 +54,7 @@ Prompt validation does not generate an image or video. QC validation does not
 open or interpret media; a `pass` or `fail` result requires explicitly marked
 observed evidence from an available artifact.
 
-[![CI](https://github.com/cyou1314/aigc-director-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/cyou1314/aigc-director-kit/actions/workflows/ci.yml)
+[![CI](https://github.com/cyou1314/cinethread/actions/workflows/ci.yml/badge.svg)](https://github.com/cyou1314/cinethread/actions/workflows/ci.yml)
 
 面向 AI 动画、AI 漫剧和分镜预演的轻量合同工具包：把镜头任务、相机路径、入/出镜状态和动作选择写成可验证、可复现的 JSON。
 

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "aigc-director-kit"
 version = "0.2.0"
-description = "Deterministic contracts for AI animation shot planning and action selection."
+description = "CineThread: deterministic creative handoffs for AI animation, storyboards, and previs."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }

@@ -1,4 +1,4 @@
-# Skill workflow integration
+# CineThread workflow integration
 
 This repository is the deterministic public core for a larger AIGC workflow.
 It does not bundle Codex skills, private assets, Blender files, model accounts,
