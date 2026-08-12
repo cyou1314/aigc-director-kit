@@ -1,5 +1,7 @@
 # AIGC Director Kit
 
+[![CI](https://github.com/cyou1314/aigc-director-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/cyou1314/aigc-director-kit/actions/workflows/ci.yml)
+
 面向 AI 动画、AI 漫剧和分镜预演的轻量合同工具包：把镜头任务、相机路径、入/出镜状态和动作选择写成可验证、可复现的 JSON。
 
 这是一个从真实 AIGC 导演预演工作流中抽出的公开 MVP。核心运行时只依赖 Python 标准库，不要求安装 Blender，也不会联网或触发付费生成。
@@ -15,10 +17,9 @@ AIGC 视频返工经常不是“不会生成”，而是镜头合同没有锁定
 
 本项目 v0.1 先把最稳定、最容易复用的部分做成工具：
 
-1. `validate-plan`：校验镜头计划的结构、时长、相机关键点和预算；
-2. `check-continuity`：提示相邻镜头的出场状态与入场状态是否需要人工确认；
-3. `list-actions`：从用户自己的动作目录检索动作；
-4. `compile-action`：把中英文自然语言请求编译成已知动作的确定性选择结果。
+1. `validate-plan`：校验镜头计划的结构、时长、相机关键点和预算，并提示相邻镜头的出场状态与入场状态是否需要人工确认；
+2. `list-actions`：从用户自己的动作目录检索动作；
+3. `compile-action`：把中英文自然语言请求编译成已知动作的确定性选择结果。
 
 动作请求只会选择目录中已有的动作。找不到动作时返回失败，不会编造 choreography、接触、表情或镜头运动。
 
@@ -81,6 +82,8 @@ python -m unittest discover -s tests -v
 
 完整示例见 [`examples/shot_plan.json`](examples/shot_plan.json)，字段说明见 [`schemas/shot-plan.v1.json`](schemas/shot-plan.v1.json)。
 
+一个来自真实工作流规则的脱敏运行案例见 [`docs/sanitized-workflow-example.md`](docs/sanitized-workflow-example.md)。
+
 ## 设计边界
 
 本仓库不包含：
@@ -102,6 +105,8 @@ python -m unittest discover -s tests -v
 ## 开源状态
 
 当前版本是 Alpha。本项目会优先记录真实 Issue、变更、测试和使用反馈，不购买 Stars、不制造虚假 PR，也不把本地技术验证写成社区采用证据。
+
+GitHub Actions 会在提交和 Pull Request 上用 Python 3.10–3.13 运行测试、校验公开示例并解析 JSON Schema。
 
 ## License
 

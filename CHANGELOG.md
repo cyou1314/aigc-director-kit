@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.1] - 2026-08-12
+
+- Added a GitHub Actions matrix for Python 3.10–3.13.
+- Added a sanitized, reproducible workflow case study.
+- Clarified that cross-shot continuity warnings are emitted by `validate-plan`.
+
 ## [0.1.0] - 2026-08-12
 
 - Added a standard-library shot-plan validator.
