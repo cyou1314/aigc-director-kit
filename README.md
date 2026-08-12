@@ -19,9 +19,9 @@ py -3 -m aigc_director_kit verify-examples --json --output cinethread-verify.jso
 python3 -m aigc_director_kit verify-examples --json --output cinethread-verify.json
 ```
 
-It checks every public plan, workflow, prompt-pack, QC-boundary, action, and
-runtime-handoff example, and returns a privacy-safe report with relative paths
-only. It does not render or generate media. For a real bug report, review the
+It checks every public plan, adapter/workflow integration, prompt-pack,
+QC-boundary, action, and runtime-handoff example, and returns a privacy-safe
+report with relative paths only. It does not render or generate media. For a real bug report, review the
 output first and use the [60-second trial guide](docs/try-it.md) or the
 [Verified run feedback](https://github.com/cyou1314/cinethread/issues/new/choose) form.
 Windows users who do not know which Python command to use can instead double-click
@@ -60,6 +60,21 @@ python -m aigc_director_kit validate-local-skill-adapter `
   examples/local_skill_adapter_case.json `
   --json
 ```
+
+Validate that the reusable adapter and one project workflow actually agree:
+
+```powershell
+python -m aigc_director_kit validate-skill-integration `
+  examples/local_skill_adapter_case.json `
+  examples/skill_workflow_case.json `
+  --library examples/action_library.json `
+  --json
+```
+
+This cross-check rejects undeclared workflow stages, mismatched Skill labels,
+output contracts or evidence semantics, action requests assigned to the wrong
+producer, and high-confidence leaks in both files such as credentials, emails, and
+absolute local paths. A passing result still requires manual privacy review.
 
 To create one packet for an optional runtime adapter:
 

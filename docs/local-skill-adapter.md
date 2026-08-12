@@ -40,6 +40,22 @@ python -m aigc_director_kit validate-local-skill-adapter `
 The example maps local stage labels to existing CineThread contracts without
 shipping any Skill instructions. It is also included in `verify-examples`.
 
+To prove that a project workflow uses this adapter consistently, run the
+cross-file validator:
+
+```powershell
+python -m aigc_director_kit validate-skill-integration `
+  examples/local_skill_adapter_case.json `
+  examples/skill_workflow_case.json `
+  --library examples/action_library.json `
+  --json
+```
+
+The workflow may use a subset of adapter stages. Every used stage must match
+on id, Skill label, output contract, and evidence semantics. The validator also
+checks that action requests come from an action-request producer and scans both
+files for high-confidence credential, email, and local-path leaks.
+
 ## Required public fields
 
 | Field | Meaning | Safe to publish |
@@ -55,8 +71,8 @@ The manifest fixes `visibility` to `public-metadata-only` and
 credentials or local paths in string values are rejected as a guard against
 accidental publication.
 
-That guard is structural, not a guarantee that prose is harmless. Review every
-manifest before publishing.
+Those guards are structural and high-confidence, not a guarantee that prose is
+harmless or anonymous. Review every manifest and workflow before publishing.
 
 ## Keep these out
 
