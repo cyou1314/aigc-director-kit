@@ -1,0 +1,55 @@
+{
+  "contract": "aigc-director-shot-plan",
+  "version": 1,
+  "project": "sanitized-one-take-previs",
+  "origin": "sanitized from an existing local previs plan",
+  "fps": 24,
+  "resolution": {
+    "width": 640,
+    "height": 360
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "duration_s": 4.0,
+      "intent": "从空间建立逐步压到人物决定",
+      "evidence": "designed",
+      "entry_state": {
+        "actors": ["hero"],
+        "movement": "forward"
+      },
+      "exit_state": {
+        "actors": ["hero"],
+        "movement": "settled-forward",
+        "screen_position": "near-center"
+      },
+      "attention_order": ["hero", "platform"],
+      "beats": ["space-established", "decision-compression", "settled-endpoint"],
+      "continuous_take": true,
+      "camera": {
+        "rig": "dolly",
+        "job": "从空间建立逐步压到人物决定",
+        "focal_length_mm": 35.0,
+        "path": [
+          {
+            "time_s": 0.0,
+            "position": [4.2, -7.5, 3.4],
+            "look_at": [0.0, 1.5, 1.25]
+          },
+          {
+            "time_s": 4.0,
+            "position": [2.5, -3.8, 2.15],
+            "look_at": [0.0, 2.25, 1.35]
+          }
+        ]
+      },
+      "actor_paths": {
+        "hero": [
+          {"time_s": 0.0, "position": [0.0, 1.3, 0.0]},
+          {"time_s": 4.0, "position": [0.0, 2.3, 0.0]}
+        ]
+      },
+      "next_handle": "Hero remains near frame center, facing forward; movement settles on the platform axis."
+    }
+  ]
+}

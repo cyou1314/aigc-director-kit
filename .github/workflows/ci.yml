@@ -35,6 +35,7 @@ jobs:
       - name: Validate public examples
         run: |
           python -m aigc_director_kit validate-plan examples/shot_plan.json --json
+          python -m aigc_director_kit validate-plan examples/one_take_previs_case.json --json
           python -m aigc_director_kit list-actions --library examples/action_library.json --query 跑
           python -m aigc_director_kit compile-action --library examples/action_library.json --text "快速跑步然后急停，过渡0.2秒，原地"
 

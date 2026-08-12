@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.3] - 2026-08-12
+
+- Added a sanitized one-take case derived from a real local previs plan.
+- Added CI validation for the new case.
+
 ## [0.1.2] - 2026-08-12
 
 - Added a Windows double-click launcher for the public examples.

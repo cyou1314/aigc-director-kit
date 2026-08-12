@@ -13,6 +13,8 @@
 
 对应文件是 [`examples/shot_plan.json`](../examples/shot_plan.json) 和 [`examples/action_library.json`](../examples/action_library.json)。
 
+另有一个从本地真实预演计划抽取的 4 秒一镜到底案例：[`examples/one_take_previs_case.json`](../examples/one_take_previs_case.json)。它只保留镜头合同、相机路径、人物抽象位置和尾状态，删除了 Blender 场景、灯光、角色资产和渲染输出。
+
 ## 1. 先校验镜头合同
 
 ```powershell
