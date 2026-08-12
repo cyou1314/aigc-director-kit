@@ -38,6 +38,21 @@ class CliTests(unittest.TestCase):
             0,
         )
 
+    def test_validate_skill_integration_json_mode(self) -> None:
+        self.assertEqual(
+            main(
+                [
+                    "validate-skill-integration",
+                    str(ROOT / "examples" / "local_skill_adapter_case.json"),
+                    str(ROOT / "examples" / "skill_workflow_case.json"),
+                    "--library",
+                    str(ROOT / "examples" / "action_library.json"),
+                    "--json",
+                ]
+            ),
+            0,
+        )
+
     def test_compile_action_refuses_overwrite(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             output = Path(temp_dir) / "action.json"

@@ -13,6 +13,7 @@ from ._version import __version__
 from .adapter import validate_local_skill_adapter_file
 from .actions import compile_action_request, list_actions, load_action_library
 from .contract import ValidationResult, validate_plan_file
+from .integration import validate_skill_integration_files
 from .prompt import validate_prompt_pack_file
 from .qc import validate_qc_report_file
 from .runtime import build_runtime_handoff_file
@@ -158,6 +159,16 @@ def run_public_example_verification(root: Path | None = None) -> dict[str, Any]:
             lambda: validate_workflow_file(examples / "skill_workflow_case.json", library_path),
         ),
         _validation_check(
+            "local-skill-integration",
+            project_root,
+            examples / "skill_workflow_case.json",
+            lambda: validate_skill_integration_files(
+                examples / "local_skill_adapter_case.json",
+                examples / "skill_workflow_case.json",
+                library_path,
+            ),
+        ),
+        _validation_check(
             "prompt-pack",
             project_root,
             examples / "prompt_pack_case.json",
@@ -257,7 +268,9 @@ def run_public_example_verification(root: Path | None = None) -> dict[str, Any]:
         },
         "checks": checks,
         "boundary": (
-            "This verifies public JSON contracts and deterministic dry-run handoffs only. "
-            "It does not render, generate, open media, or perform final video QC."
+            "This verifies public JSON contracts, adapter/workflow compatibility, "
+            "high-confidence leak patterns, and deterministic dry-run handoffs only. "
+            "Manual privacy review is still required. It does not render, generate, "
+            "open media, or perform final video QC."
         ),
     }

@@ -56,6 +56,21 @@ metadata-only field set rejects prompt bodies, paths, assets, and credentials.
 The separate [`local-skill-adapter.md`](local-skill-adapter.md) guide explains
 what may safely appear in a public manifest.
 
+Cross-check the adapter and project workflow together before publication:
+
+```powershell
+python -m aigc_director_kit validate-skill-integration `
+  examples/local_skill_adapter_case.json `
+  examples/skill_workflow_case.json `
+  --library examples/action_library.json `
+  --json
+```
+
+This requires every used workflow stage to match the adapter's id, Skill label,
+output contract, and evidence semantics. It verifies required producers and
+high-confidence public-safety patterns, but it cannot determine whether all
+free-form prose is anonymous. Manual privacy review remains required.
+
 ## Run the public handoff
 
 Without an action catalog, the workflow is checked structurally and action
@@ -130,11 +145,14 @@ python -m aigc_director_kit validate-qc-report `
 3. Embed a versioned `aigc-director-shot-plan` in `shot_plan`.
 4. Put natural-language action intent in `action_requests[]` with a shot and
    stage reference.
-5. Run `validate-workflow --library ...` before handing the packet to an
-   optional runtime adapter.
-6. Run `build-runtime-handoff ... --adapter ...` when the next runtime needs a
+5. Run `validate-workflow --library ...`, then
+   `validate-skill-integration <adapter> <workflow> --library ...` before
+   publication or runtime handoff.
+6. Manually review the final adapter and workflow for private prose or asset
+   identities that automated checks cannot infer.
+7. Run `build-runtime-handoff ... --adapter ...` when the next runtime needs a
    single dry-run packet.
-7. Add a public example and a regression test when the contract changes.
+8. Add a public example and a regression test when the contract changes.
 
 Keep private source paths, credentials, cookies, private character assets,
 unlicensed motion data, and generated media out of the packet. Mark inferred

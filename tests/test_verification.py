@@ -16,7 +16,7 @@ class PublicExampleVerificationTests(unittest.TestCase):
 
         self.assertTrue(report["valid"])
         self.assertEqual(report["version"], __version__)
-        self.assertEqual(report["summary"], {"check_count": 12, "passed_check_count": 12})
+        self.assertEqual(report["summary"], {"check_count": 13, "passed_check_count": 13})
         self.assertNotIn(str(ROOT), json.dumps(report, ensure_ascii=False))
         self.assertTrue(all(check["valid"] for check in report["checks"]))
 

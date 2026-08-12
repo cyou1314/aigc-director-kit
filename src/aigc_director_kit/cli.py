@@ -12,6 +12,7 @@ from ._version import __version__
 from .adapter import validate_local_skill_adapter_file
 from .actions import compile_action_request, list_actions, load_action_library
 from .contract import validate_plan_file
+from .integration import validate_skill_integration_files
 from .prompt import validate_prompt_pack_file
 from .qc import validate_qc_report_file
 from .runtime import build_runtime_handoff_file
@@ -46,6 +47,15 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     adapter.add_argument("path", type=Path)
     adapter.add_argument("--json", action="store_true", dest="as_json")
+
+    integration = subparsers.add_parser(
+        "validate-skill-integration",
+        help="Cross-check a public local-Skill adapter and project workflow.",
+    )
+    integration.add_argument("adapter", type=Path)
+    integration.add_argument("workflow", type=Path)
+    integration.add_argument("--library", type=Path)
+    integration.add_argument("--json", action="store_true", dest="as_json")
 
     prompt = subparsers.add_parser(
         "validate-prompt-pack",
@@ -152,6 +162,26 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"stages: {result.summary.get('stage_count', 0)}")
                 print(f"skills: {len(result.summary.get('skill_labels', []))}")
                 print(f"workflow_contract: {result.summary.get('workflow_contract')}")
+                for error in result.errors:
+                    print(f"error: {error}")
+                for warning in result.warnings:
+                    print(f"warning: {warning}")
+            return 0 if result.valid else 2
+
+        if args.command == "validate-skill-integration":
+            result = validate_skill_integration_files(
+                args.adapter,
+                args.workflow,
+                args.library,
+            )
+            if args.as_json:
+                _dump(result.as_dict())
+            else:
+                print(f"valid: {'yes' if result.valid else 'no'}")
+                print(f"matched_stages: {result.summary.get('matched_stage_count', 0)}")
+                print(f"compiled_actions: {result.summary.get('compiled_action_count', 0)}")
+                print(f"public_safety_issues: {result.summary.get('public_safety_issue_count', 0)}")
+                print("manual_privacy_review_required: yes")
                 for error in result.errors:
                     print(f"error: {error}")
                 for warning in result.warnings:

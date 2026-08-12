@@ -8,6 +8,8 @@
   compiled action requests without launching Blender.
 - [x] A metadata-only local Skill adapter can document public integration
   contracts without publishing local implementation details.
+- [x] Adapter/workflow cross-validation checks stage ownership, output and
+  evidence compatibility, action-producer routing, and high-confidence leaks.
 - [x] The Windows example launcher accepts `AIGC_DIRECTOR_PYTHON` and checks
   common Python install locations.
 - [ ] Add an optional Blender adapter that consumes the handoff and records

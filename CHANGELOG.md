@@ -1,5 +1,12 @@
 # CineThread Changelog
 
+## [0.2.4] - 2026-08-12
+
+- Added `validate-skill-integration` to cross-check a metadata adapter against a project workflow.
+- Added stage ownership, output-contract, evidence-semantics, required-producer, and action-producer validation.
+- Added high-confidence public-safety checks for credential fields and values, email addresses, and absolute local or network paths while keeping manual privacy review mandatory.
+- Added regression tests, documentation, CI coverage, and one-command public verification coverage for the integrated handoff.
+
 ## [0.2.3] - 2026-08-12
 
 - Added `aigc-director-local-skill-adapter`, a strict metadata-only contract for describing the interface between local Skills and CineThread.
