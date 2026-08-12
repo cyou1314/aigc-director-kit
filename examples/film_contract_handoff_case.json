@@ -1,0 +1,56 @@
+{
+  "contract": "aigc-director-shot-plan",
+  "version": 1,
+  "project": "sanitized-film-contract-handoff",
+  "origin": "sanitized from an existing local forward-test plan",
+  "fps": 24,
+  "resolution": {
+    "width": 640,
+    "height": 360
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "duration_s": 4.0,
+      "intent": "用一次稳定横移和焦点转移，把注意力从前景线索交给人物决定",
+      "evidence": "designed",
+      "entry_state": {
+        "actors": ["hero"],
+        "foreground": "orange-clue",
+        "attention": "foreground"
+      },
+      "exit_state": {
+        "actors": ["hero"],
+        "attention": "hero-right-hand",
+        "screen_axis": "hero-facing-forward"
+      },
+      "attention_order": ["foreground-clue", "hero-face", "hero-right-hand"],
+      "beats": ["foreground", "decision", "settle"],
+      "continuous_take": true,
+      "camera": {
+        "rig": "dolly",
+        "job": "沿人物正面横移，并把焦点从前景交给人物的决定动作",
+        "focal_length_mm": 50.0,
+        "focus_distance_m": 2.2,
+        "path": [
+          {
+            "time_s": 0.0,
+            "position": [2.8, 5.4, 2.4],
+            "look_at": [0.0, 0.0, 1.05]
+          },
+          {
+            "time_s": 2.0,
+            "position": [0.45, 4.25, 1.95],
+            "look_at": [0.0, 0.0, 1.04]
+          },
+          {
+            "time_s": 4.0,
+            "position": [-2.25, 4.65, 2.15],
+            "look_at": [0.0, 0.0, 1.08]
+          }
+        ]
+      },
+      "next_handle": "保持人物正面视线和抬起的右手位置，下一镜可反打其注视对象。"
+    }
+  ]
+}

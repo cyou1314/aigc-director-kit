@@ -86,7 +86,7 @@ python -m unittest discover -s tests -v
 
 完整示例见 [`examples/shot_plan.json`](examples/shot_plan.json)，字段说明见 [`schemas/shot-plan.v1.json`](schemas/shot-plan.v1.json)。
 
-一个来自真实工作流规则的脱敏运行案例见 [`docs/sanitized-workflow-example.md`](docs/sanitized-workflow-example.md)。
+来自真实本地预演工作流的脱敏案例清单见 [`docs/real-workflow-evidence.md`](docs/real-workflow-evidence.md)；基础运行说明见 [`docs/sanitized-workflow-example.md`](docs/sanitized-workflow-example.md)。
 
 ## 设计边界
 

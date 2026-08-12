@@ -1,0 +1,55 @@
+{
+  "contract": "aigc-director-shot-plan",
+  "version": 1,
+  "project": "sanitized-two-actor-prop-handoff",
+  "origin": "sanitized from an existing local forward-test plan",
+  "fps": 24,
+  "resolution": {
+    "width": 640,
+    "height": 480
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "duration_s": 5.0,
+      "intent": "让交接双方先保持互视，再完成道具接触",
+      "evidence": "designed",
+      "entry_state": {
+        "actors": ["giver", "receiver"],
+        "prop": "held-by-giver",
+        "attention": "eye-line"
+      },
+      "exit_state": {
+        "actors": ["giver", "receiver"],
+        "prop": "shared-contact",
+        "attention": "handoff"
+      },
+      "attention_order": ["eye-line", "giver-hand", "receiver-hand", "shared-contact"],
+      "beats": ["establish", "reach", "hold"],
+      "continuous_take": true,
+      "camera": {
+        "rig": "tripod",
+        "job": "保持交互轴线稳定，让视线、道具和双手接触依次可读",
+        "focal_length_mm": 50.0,
+        "focus_distance_m": 6.4,
+        "path": [
+          {
+            "time_s": 0.0,
+            "position": [3.8, 5.2, 2.25],
+            "look_at": [0.0, 0.4, 1.0]
+          },
+          {
+            "time_s": 5.0,
+            "position": [3.8, 5.2, 2.25],
+            "look_at": [0.0, 0.4, 1.0]
+          }
+        ]
+      },
+      "actor_states": {
+        "giver": "保持右手持有道具并与接收者互视",
+        "receiver": "面向给予者，用左手接近道具"
+      },
+      "next_handle": "双方保持道具接触和互视，下一镜从共享接触状态继续。"
+    }
+  ]
+}

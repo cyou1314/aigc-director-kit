@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.4] - 2026-08-12
+
+- Added two sanitized cases derived from real local previs forward tests.
+- Added regression coverage for the public workflow case set.
+- Added a transparent feedback template and maintainer-relationship boundary.
+
 ## [0.1.3] - 2026-08-12
 
 - Added a sanitized one-take case derived from a real local previs plan.
