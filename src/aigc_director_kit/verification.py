@@ -9,6 +9,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
+from ._version import __version__
 from .actions import compile_action_request, list_actions, load_action_library
 from .contract import ValidationResult, validate_plan_file
 from .prompt import validate_prompt_pack_file
@@ -235,6 +236,7 @@ def run_public_example_verification(root: Path | None = None) -> dict[str, Any]:
     return {
         "tool": "CineThread",
         "package": "aigc-director-kit",
+        "version": __version__,
         "environment": {
             "python": platform.python_version(),
             "implementation": platform.python_implementation(),

@@ -1,0 +1,83 @@
+name: Verified run feedback
+description: Share a real result after running CineThread's public verification.
+title: "run: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for running CineThread. This form is for an actual result,
+        whether all checks passed or not. Do not include private media,
+        credentials, cookies, or local absolute paths.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Run `aigc-director-kit --version` or provide a release tag or commit SHA.
+      placeholder: v0.2.2
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, and how you obtained the repository.
+      placeholder: Windows 11, Python 3.12, downloaded release ZIP
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command or launcher used
+      description: For example, `run_examples.bat` or the exact `verify-examples` command.
+      render: shell
+    validations:
+      required: true
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Result
+      options:
+        - All public checks passed
+        - One or more checks failed
+        - Could not complete the run
+    validations:
+      required: true
+  - type: textarea
+    id: observations
+    attributes:
+      label: Observations or sanitized report excerpt
+      description: Attach or paste the generated JSON report only after reviewing it for private information.
+    validations:
+      required: true
+  - type: dropdown
+    id: relationship
+    attributes:
+      label: Relationship to the maintainer
+      options:
+        - Independent user
+        - Maintainer
+        - Maintainer alternate account
+        - Collaborator
+    validations:
+      required: true
+  - type: dropdown
+    id: quotation_permission
+    attributes:
+      label: Maintenance quotation permission
+      description: This does not change the public visibility of this Issue.
+      options:
+        - May quote a short anonymized summary
+        - Do not quote this feedback
+    validations:
+      required: true
+  - type: checkboxes
+    id: safeguards
+    attributes:
+      label: Safeguards
+      options:
+        - label: I ran the command or launcher above myself.
+          required: true
+        - label: I removed credentials, private assets, and local absolute paths.
+          required: true
+        - label: I am not presenting a maintainer alternate account as independent adoption.
+          required: true

@@ -13,7 +13,7 @@ class VersionTests(unittest.TestCase):
         project_text = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
         project_version = re.search(r'^version\s*=\s*"([^"]+)"\s*$', project_text, re.MULTILINE)
         self.assertIsNotNone(project_version)
-        self.assertEqual(__version__, "0.2.1")
+        self.assertEqual(__version__, "0.2.2")
         self.assertEqual(__version__, project_version.group(1))
 
 
