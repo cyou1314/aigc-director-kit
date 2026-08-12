@@ -39,38 +39,8 @@ if errorlevel 1 goto :missing_python
 
 set "PYTHONPATH=%CD%\src"
 
-echo === Validate shot plan ===
-%PYTHON_CMD% -m aigc_director_kit validate-plan examples\shot_plan.json
-if errorlevel 1 goto :failed
-
-echo.
-echo === Search action catalog ===
-%PYTHON_CMD% -m aigc_director_kit list-actions --library examples\action_library.json --query run
-if errorlevel 1 goto :failed
-
-echo.
-echo === Compile bounded action request ===
-%PYTHON_CMD% -m aigc_director_kit compile-action --library examples\action_library.json --text "run quick stop, blend 0.2s, fast, in place"
-if errorlevel 1 goto :failed
-
-echo.
-echo === Validate Skill workflow handoff ===
-%PYTHON_CMD% -m aigc_director_kit validate-workflow examples\skill_workflow_case.json --library examples\action_library.json
-if errorlevel 1 goto :failed
-
-echo.
-echo === Validate prompt pack ===
-%PYTHON_CMD% -m aigc_director_kit validate-prompt-pack examples\prompt_pack_case.json --plan examples\one_take_previs_case.json
-if errorlevel 1 goto :failed
-
-echo.
-echo === Validate QC evidence boundary ===
-%PYTHON_CMD% -m aigc_director_kit validate-qc-report examples\qc_report_unverified_case.json
-if errorlevel 1 goto :failed
-
-echo.
-echo === Build runtime adapter handoff ===
-%PYTHON_CMD% -m aigc_director_kit build-runtime-handoff examples\skill_workflow_case.json --library examples\action_library.json --adapter optional-runtime-adapter
+echo === Verify public CineThread examples ===
+%PYTHON_CMD% -m aigc_director_kit verify-examples --root .
 if errorlevel 1 goto :failed
 
 echo.

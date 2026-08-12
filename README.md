@@ -6,6 +6,26 @@
 versioned JSON contract identifiers remain `aigc-director-kit` in the 0.x
 series for compatibility.
 
+## Verify a checkout in one command
+
+After cloning or extracting this repository, run the verification from the
+repository folder:
+
+```powershell
+# Windows terminal (when the Python launcher is installed)
+py -3 -m aigc_director_kit verify-examples --json
+
+# macOS or Linux
+python3 -m aigc_director_kit verify-examples --json
+```
+
+It checks every public plan, workflow, prompt-pack, QC-boundary, action, and
+runtime-handoff example, and returns a privacy-safe report with relative paths
+only. It does not render or generate media. For a real bug report, review the
+output first and use the [verified feedback template](docs/feedback-template.md).
+Windows users who do not know which Python command to use can instead double-click
+[`run_examples.bat`](run_examples.bat); it detects common Python installations.
+
 ## Skill workflow handoff
 
 Local AIGC Skills can hand a sanitized workflow packet to this repository:
@@ -94,6 +114,7 @@ Windows 用户也可以直接双击 [`run_examples.bat`](run_examples.bat) 查�
 命令行方式：
 
 ```powershell
+python -m aigc_director_kit verify-examples --json
 python -m aigc_director_kit validate-plan examples/shot_plan.json
 python -m aigc_director_kit list-actions --library examples/action_library.json --query 跑
 python -m aigc_director_kit compile-action `

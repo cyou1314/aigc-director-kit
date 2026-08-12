@@ -1,5 +1,10 @@
 # CineThread Changelog
 
+## [0.2.1] - 2026-08-12
+
+- Added `verify-examples`, a cross-platform, privacy-safe one-command verification report for every public example.
+- Updated the Windows launcher, quick start, contribution guide, feedback template, and CI to use the new verification path.
+
 ## [0.2.0] - 2026-08-12
 
 - Added the `aigc-director-skill-workflow` handoff contract and schema.
