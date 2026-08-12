@@ -1,5 +1,53 @@
 # AIGC Director Kit
 
+## Skill workflow handoff
+
+Local AIGC Skills can hand a sanitized workflow packet to this repository:
+
+```text
+Skill output -> skill-workflow JSON -> validate-workflow -> optional runtime adapter
+```
+
+The public contract is documented in [`docs/skill-workflow-integration.md`](docs/skill-workflow-integration.md),
+with a runnable example at [`examples/skill_workflow_case.json`](examples/skill_workflow_case.json):
+
+```powershell
+python -m aigc_director_kit validate-workflow `
+  examples/skill_workflow_case.json `
+  --library examples/action_library.json
+```
+
+This is a deterministic handoff and dry-run boundary. It does not bundle
+private Skills, Blender, FFmpeg, model accounts, paid generation, or final
+video QC.
+
+To create one packet for an optional runtime adapter:
+
+```powershell
+python -m aigc_director_kit build-runtime-handoff `
+  examples/skill_workflow_case.json `
+  --library examples/action_library.json `
+  --adapter blender-previs `
+  --json
+```
+
+The packet is always a dry-run handoff: it does not launch Blender or render
+media, and it keeps render/QC evidence separate from contract validation.
+
+Prompt packs and QC evidence use separate contracts:
+
+```powershell
+python -m aigc_director_kit validate-prompt-pack `
+  examples/prompt_pack_case.json `
+  --plan examples/one_take_previs_case.json
+
+python -m aigc_director_kit validate-qc-report examples/qc_report_unverified_case.json
+```
+
+Prompt validation does not generate an image or video. QC validation does not
+open or interpret media; a `pass` or `fail` result requires explicitly marked
+observed evidence from an available artifact.
+
 [![CI](https://github.com/cyou1314/aigc-director-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/cyou1314/aigc-director-kit/actions/workflows/ci.yml)
 
 面向 AI 动画、AI 漫剧和分镜预演的轻量合同工具包：把镜头任务、相机路径、入/出镜状态和动作选择写成可验证、可复现的 JSON。

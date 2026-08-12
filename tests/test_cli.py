@@ -10,6 +10,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class CliTests(unittest.TestCase):
+    def test_windows_example_runner_has_portable_python_fallbacks(self) -> None:
+        runner = (ROOT / "run_examples.bat").read_text(encoding="utf-8")
+        self.assertIn("AIGC_DIRECTOR_PYTHON", runner)
+        self.assertIn("%LocalAppData%\\Programs\\Python\\Python*\\python.exe", runner)
+        self.assertIn("Python 3.10 or newer", runner)
+
     def test_validate_plan_json_mode(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             output = Path(temp_dir) / "result.json"

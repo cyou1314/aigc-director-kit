@@ -1,5 +1,18 @@
 # Roadmap
 
+## v0.2 implementation status
+
+- [x] Workflow, prompt-pack, and QC evidence contracts are available as
+  standard-library-only validators.
+- [x] A runtime adapter dry-run handoff can combine the validated plan and
+  compiled action requests without launching Blender.
+- [x] The Windows example launcher accepts `AIGC_DIRECTOR_PYTHON` and checks
+  common Python install locations.
+- [ ] Add an optional Blender adapter that consumes the handoff and records
+  real previs evidence.
+- [ ] Add field-level error codes and keep the JSON output stable across
+  releases.
+
 ## v0.1 — 当前范围
 
 - [x] 镜头计划合同和确定性校验
@@ -8,10 +21,10 @@
 - [x] 中文/英文动作请求编译
 - [x] 无第三方运行时依赖
 
-## v0.2 — 需要真实用户反馈后再做
+## v0.2 — 部分完成，等待真实运行时反馈
 
-- [ ] 可选 Blender 适配器，不把 Blender 加入核心依赖
-- [ ] 计划到运行时的 dry-run 报告
+- [x] 可选运行时 dry-run 交接包，不把 Blender 加入核心依赖
+- [ ] 可选 Blender 适配器，消费交接包并记录真实预演证据
 - [ ] 更明确的字段级错误码和 JSON 输出稳定性
 
 ## v0.3 — 暂不承诺
