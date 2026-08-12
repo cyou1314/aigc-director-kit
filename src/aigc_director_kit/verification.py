@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from ._version import __version__
+from .adapter import validate_local_skill_adapter_file
 from .actions import compile_action_request, list_actions, load_action_library
 from .contract import ValidationResult, validate_plan_file
 from .prompt import validate_prompt_pack_file
@@ -143,6 +144,12 @@ def run_public_example_verification(root: Path | None = None) -> dict[str, Any]:
             project_root,
             examples / "multi_actor_prop_case.json",
             lambda: validate_plan_file(examples / "multi_actor_prop_case.json"),
+        ),
+        _validation_check(
+            "local-skill-adapter",
+            project_root,
+            examples / "local_skill_adapter_case.json",
+            lambda: validate_local_skill_adapter_file(examples / "local_skill_adapter_case.json"),
         ),
         _validation_check(
             "skill-workflow",

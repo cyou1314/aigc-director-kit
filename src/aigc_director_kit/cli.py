@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from ._version import __version__
+from .adapter import validate_local_skill_adapter_file
 from .actions import compile_action_request, list_actions, load_action_library
 from .contract import validate_plan_file
 from .prompt import validate_prompt_pack_file
@@ -38,6 +39,13 @@ def _build_parser() -> argparse.ArgumentParser:
     workflow.add_argument("path", type=Path)
     workflow.add_argument("--library", type=Path)
     workflow.add_argument("--json", action="store_true", dest="as_json")
+
+    adapter = subparsers.add_parser(
+        "validate-local-skill-adapter",
+        help="Validate a public metadata-only interface for local Skills.",
+    )
+    adapter.add_argument("path", type=Path)
+    adapter.add_argument("--json", action="store_true", dest="as_json")
 
     prompt = subparsers.add_parser(
         "validate-prompt-pack",
@@ -129,6 +137,21 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"shots: {result.summary.get('shot_count', 0)}")
                 print(f"action_requests: {result.summary.get('action_request_count', 0)}")
                 print(f"compiled_actions: {result.summary.get('compiled_action_count', 0)}")
+                for error in result.errors:
+                    print(f"error: {error}")
+                for warning in result.warnings:
+                    print(f"warning: {warning}")
+            return 0 if result.valid else 2
+
+        if args.command == "validate-local-skill-adapter":
+            result = validate_local_skill_adapter_file(args.path)
+            if args.as_json:
+                _dump(result.as_dict())
+            else:
+                print(f"valid: {'yes' if result.valid else 'no'}")
+                print(f"stages: {result.summary.get('stage_count', 0)}")
+                print(f"skills: {len(result.summary.get('skill_labels', []))}")
+                print(f"workflow_contract: {result.summary.get('workflow_contract')}")
                 for error in result.errors:
                     print(f"error: {error}")
                 for warning in result.warnings:

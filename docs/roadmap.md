@@ -6,6 +6,8 @@
   standard-library-only validators.
 - [x] A runtime adapter dry-run handoff can combine the validated plan and
   compiled action requests without launching Blender.
+- [x] A metadata-only local Skill adapter can document public integration
+  contracts without publishing local implementation details.
 - [x] The Windows example launcher accepts `AIGC_DIRECTOR_PYTHON` and checks
   common Python install locations.
 - [ ] Add an optional Blender adapter that consumes the handoff and records

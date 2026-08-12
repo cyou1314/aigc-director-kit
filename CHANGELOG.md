@@ -1,5 +1,11 @@
 # CineThread Changelog
 
+## [0.2.3] - 2026-08-12
+
+- Added `aigc-director-local-skill-adapter`, a strict metadata-only contract for describing the interface between local Skills and CineThread.
+- Added `validate-local-skill-adapter`, a sanitized example, schema, documentation, CI coverage, and one-command public verification coverage.
+- Kept local Skill source, prompts, paths, assets, credentials, runtime execution, and media QC outside the public adapter boundary.
+
 ## [0.2.2] - 2026-08-12
 
 - Added a package version field and safe JSON report export to `verify-examples`, plus `aigc-director-kit --version`.

@@ -1,0 +1,50 @@
+{
+  "contract": "aigc-director-local-skill-adapter",
+  "version": 1,
+  "adapter_id": "local-aigc-skill-bridge",
+  "visibility": "public-metadata-only",
+  "source_access": "local-only",
+  "workflow_contract": "aigc-director-skill-workflow",
+  "stages": [
+    {
+      "id": "direction",
+      "skill_label": "aigc-manga-video-director",
+      "role": "Turns direction decisions into a bounded shot-plan handoff.",
+      "input_contracts": ["project-brief", "reference-inventory"],
+      "output_contract": "aigc-director-shot-plan",
+      "evidence": "designed"
+    },
+    {
+      "id": "action-bridge",
+      "skill_label": "audio-to-prompt",
+      "role": "Turns timing and action intent into bounded action requests.",
+      "input_contracts": ["timing-and-action-intent", "shot-plan"],
+      "output_contract": "aigc-director-action-request",
+      "evidence": "inferred"
+    },
+    {
+      "id": "prompt-contract",
+      "skill_label": "prompt-optimizer",
+      "role": "Keeps reusable prompt rules separate from shot-level deltas.",
+      "input_contracts": ["shot-plan", "prompt-rules"],
+      "output_contract": "aigc-director-prompt-pack",
+      "evidence": "designed"
+    },
+    {
+      "id": "quality-evidence",
+      "skill_label": "aigc-output-qc",
+      "role": "Records evidence-bound assessment for an available artifact.",
+      "input_contracts": ["rendered-artifact", "qc-checklist"],
+      "output_contract": "aigc-director-qc-report",
+      "evidence": "observed"
+    },
+    {
+      "id": "coordination",
+      "skill_label": "aigc-project-prompt-loop",
+      "role": "Packages sanitized stage outputs into a workflow handoff.",
+      "input_contracts": ["shot-plan", "action-request", "prompt-pack", "qc-report"],
+      "output_contract": "aigc-director-skill-workflow",
+      "evidence": "designed"
+    }
+  ]
+}

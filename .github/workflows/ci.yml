@@ -45,6 +45,7 @@ jobs:
 
       - name: Validate workflow, prompt, and QC contracts
         run: |
+          python -m aigc_director_kit validate-local-skill-adapter examples/local_skill_adapter_case.json --json
           python -m aigc_director_kit validate-workflow examples/skill_workflow_case.json --library examples/action_library.json --json
           python -m aigc_director_kit validate-prompt-pack examples/prompt_pack_case.json --plan examples/one_take_previs_case.json --json
           python -m aigc_director_kit validate-qc-report examples/qc_report_unverified_case.json --json

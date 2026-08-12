@@ -26,6 +26,18 @@ class CliTests(unittest.TestCase):
             # The CLI writes to stdout; this assertion exercises the actual command path.
             self.assertEqual(main(["validate-plan", str(ROOT / "examples" / "shot_plan.json"), "--json"]), 0)
 
+    def test_validate_local_skill_adapter_json_mode(self) -> None:
+        self.assertEqual(
+            main(
+                [
+                    "validate-local-skill-adapter",
+                    str(ROOT / "examples" / "local_skill_adapter_case.json"),
+                    "--json",
+                ]
+            ),
+            0,
+        )
+
     def test_compile_action_refuses_overwrite(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             output = Path(temp_dir) / "action.json"
