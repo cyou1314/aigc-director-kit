@@ -5,6 +5,7 @@
 ## 开始
 
 ```powershell
+python -m aigc_director_kit verify-examples --json
 python -m unittest discover -s tests -v
 python -m aigc_director_kit validate-plan examples/shot_plan.json
 python -m aigc_director_kit list-actions --library examples/action_library.json --query 跑

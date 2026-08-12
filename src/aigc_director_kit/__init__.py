@@ -5,14 +5,17 @@ from .contract import ValidationResult, load_plan, validate_plan, validate_plan_
 from .prompt import validate_prompt_pack, validate_prompt_pack_file
 from .qc import validate_qc_report, validate_qc_report_file
 from .runtime import build_runtime_handoff, build_runtime_handoff_file
+from .verification import find_project_root, run_public_example_verification
 from .workflow import validate_workflow, validate_workflow_file
 
 __all__ = [
     "ValidationResult",
     "compile_action_request",
+    "find_project_root",
     "list_actions",
     "load_action_library",
     "load_plan",
+    "run_public_example_verification",
     "validate_plan",
     "validate_plan_file",
     "validate_prompt_pack",
@@ -25,4 +28,4 @@ __all__ = [
     "validate_workflow_file",
 ]
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"

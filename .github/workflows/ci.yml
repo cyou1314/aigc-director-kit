@@ -34,6 +34,7 @@ jobs:
 
       - name: Validate public examples
         run: |
+          python -m aigc_director_kit verify-examples --json
           python -m aigc_director_kit validate-plan examples/shot_plan.json --json
           python -m aigc_director_kit validate-plan examples/one_take_previs_case.json --json
           python -m aigc_director_kit validate-plan examples/film_contract_handoff_case.json --json

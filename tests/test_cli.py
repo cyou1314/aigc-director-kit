@@ -15,6 +15,7 @@ class CliTests(unittest.TestCase):
         self.assertIn("AIGC_DIRECTOR_PYTHON", runner)
         self.assertIn("%LocalAppData%\\Programs\\Python\\Python*\\python.exe", runner)
         self.assertIn("Python 3.10 or newer", runner)
+        self.assertIn("verify-examples --root .", runner)
 
     def test_validate_plan_json_mode(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -38,6 +39,15 @@ class CliTests(unittest.TestCase):
                 ]
             )
             self.assertEqual(code, 1)
+
+    def test_verify_examples_json_mode(self) -> None:
+        self.assertEqual(
+            main(["verify-examples", "--root", str(ROOT), "--json"]),
+            0,
+        )
+
+    def test_verify_examples_rejects_an_invalid_explicit_root(self) -> None:
+        self.assertEqual(main(["verify-examples", "--root", str(ROOT / "missing")]), 1)
 
 
 if __name__ == "__main__":

@@ -2,6 +2,14 @@
 
 只填写实际运行过的结果，不要为了活动申请制造反馈、Stars、Issue 或 PR。
 
+建议先在克隆或解压后的仓库目录运行：
+
+```powershell
+python -m aigc_director_kit verify-examples --json
+```
+
+它只输出相对路径和通用环境信息；在公开前仍请自行检查输出，删除不应公开的内容。
+
 ```text
 版本/commit:
 运行环境:

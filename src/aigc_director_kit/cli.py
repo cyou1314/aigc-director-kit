@@ -13,6 +13,7 @@ from .contract import validate_plan_file
 from .prompt import validate_prompt_pack_file
 from .qc import validate_qc_report_file
 from .runtime import build_runtime_handoff_file
+from .verification import run_public_example_verification
 from .workflow import validate_workflow_file
 
 
@@ -60,6 +61,17 @@ def _build_parser() -> argparse.ArgumentParser:
     handoff.add_argument("--adapter", default="optional-runtime-adapter")
     handoff.add_argument("--output", type=Path)
     handoff.add_argument("--json", action="store_true", dest="as_json")
+
+    verify = subparsers.add_parser(
+        "verify-examples",
+        help="Run a privacy-safe, cross-platform verification of the public examples.",
+    )
+    verify.add_argument(
+        "--root",
+        type=Path,
+        help="CineThread source checkout; defaults to the current directory or a parent.",
+    )
+    verify.add_argument("--json", action="store_true", dest="as_json")
 
     search = subparsers.add_parser("list-actions", help="Search an action catalog.")
     search.add_argument("--library", required=True, type=Path)
@@ -162,6 +174,23 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"adapter: {packet['runtime']['adapter']}")
                 print(f"mode: {packet['runtime']['mode']}")
             return 0 if packet["valid"] else 2
+
+        if args.command == "verify-examples":
+            report = run_public_example_verification(args.root)
+            if args.as_json:
+                _dump(report)
+            else:
+                print(f"valid: {'yes' if report['valid'] else 'no'}")
+                print(f"checks: {report['summary']['check_count']}")
+                print(f"passed_checks: {report['summary']['passed_check_count']}")
+                for check in report["checks"]:
+                    print(f"{'ok' if check['valid'] else 'error'}: {check['id']}")
+                    for error in check["errors"]:
+                        print(f"error: {error}")
+                    for warning in check["warnings"]:
+                        print(f"warning: {warning}")
+                print(f"boundary: {report['boundary']}")
+            return 0 if report["valid"] else 2
 
         if args.command == "list-actions":
             library = load_action_library(args.library)
