@@ -1,6 +1,7 @@
 """CineThread public Python API."""
 
 from ._version import __version__
+from .adapter import validate_local_skill_adapter, validate_local_skill_adapter_file
 from .actions import compile_action_request, list_actions, load_action_library
 from .contract import ValidationResult, load_plan, validate_plan, validate_plan_file
 from .prompt import validate_prompt_pack, validate_prompt_pack_file
@@ -18,6 +19,8 @@ __all__ = [
     "load_action_library",
     "load_plan",
     "run_public_example_verification",
+    "validate_local_skill_adapter",
+    "validate_local_skill_adapter_file",
     "validate_plan",
     "validate_plan_file",
     "validate_prompt_pack",

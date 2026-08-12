@@ -29,10 +29,11 @@ Windows users who do not know which Python command to use can instead double-cli
 
 ## Skill workflow handoff
 
-Local AIGC Skills can hand a sanitized workflow packet to this repository:
+Local AIGC Skills can publish a metadata-only adapter, then hand a sanitized
+workflow packet to this repository:
 
 ```text
-Skill output -> skill-workflow JSON -> validate-workflow -> optional runtime adapter
+local Skills -> metadata-only adapter -> skill-workflow JSON -> validate-workflow -> optional runtime adapter
 ```
 
 The public contract is documented in [`docs/skill-workflow-integration.md`](docs/skill-workflow-integration.md),
@@ -47,6 +48,18 @@ python -m aigc_director_kit validate-workflow `
 This is a deterministic handoff and dry-run boundary. It does not bundle
 private Skills, Blender, FFmpeg, model accounts, paid generation, or final
 video QC.
+
+The optional adapter manifest makes the boundary explicit: it maps only Skill
+labels, input/output contract names, and evidence semantics. It cannot carry
+Skill source, prompts, paths, assets, or credentials. See
+[`docs/local-skill-adapter.md`](docs/local-skill-adapter.md) and validate the
+included example with:
+
+```powershell
+python -m aigc_director_kit validate-local-skill-adapter `
+  examples/local_skill_adapter_case.json `
+  --json
+```
 
 To create one packet for an optional runtime adapter:
 

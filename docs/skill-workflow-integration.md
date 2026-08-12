@@ -38,6 +38,24 @@ The example uses `aigc-manga-video-director`, `audio-to-prompt`, and
 `aigc-project-prompt-loop` as illustrative stage labels. They are not bundled
 with this Python package and can be replaced by another workflow producer.
 
+## Metadata-only local Skill adapter
+
+Before a project-specific workflow packet exists, a local workflow may publish
+an `aigc-director-local-skill-adapter` manifest. It maps only a stable Skill
+label, its input and output contract labels, and the evidence semantics of the
+stage. It is intentionally reusable and contains no project content.
+
+```powershell
+python -m aigc_director_kit validate-local-skill-adapter `
+  examples/local_skill_adapter_case.json `
+  --json
+```
+
+The adapter is not a Skill export and does not execute a Skill. Its strict
+metadata-only field set rejects prompt bodies, paths, assets, and credentials.
+The separate [`local-skill-adapter.md`](local-skill-adapter.md) guide explains
+what may safely appear in a public manifest.
+
 ## Run the public handoff
 
 Without an action catalog, the workflow is checked structurally and action
