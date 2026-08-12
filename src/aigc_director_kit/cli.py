@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from ._version import __version__
 from .actions import compile_action_request, list_actions, load_action_library
 from .contract import validate_plan_file
 from .prompt import validate_prompt_pack_file
@@ -23,6 +24,7 @@ def _dump(value: Any) -> None:
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="aigc-director-kit")
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     validate = subparsers.add_parser("validate-plan", help="Validate a shot-plan JSON file.")
@@ -71,6 +73,11 @@ def _build_parser() -> argparse.ArgumentParser:
         type=Path,
         help="CineThread source checkout; defaults to the current directory or a parent.",
     )
+    verify.add_argument(
+        "--output",
+        type=Path,
+        help="Write the report to a new JSON file; existing files are never overwritten.",
+    )
     verify.add_argument("--json", action="store_true", dest="as_json")
 
     search = subparsers.add_parser("list-actions", help="Search an action catalog.")
@@ -90,7 +97,7 @@ def _build_parser() -> argparse.ArgumentParser:
 def _write_new_json(path: Path, value: Any) -> None:
     target = path.resolve()
     if target.exists():
-        raise FileExistsError(f"Refusing to overwrite existing output: {target}")
+        raise FileExistsError("Refusing to overwrite existing output. Choose a new output path.")
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
@@ -177,9 +184,12 @@ def main(argv: list[str] | None = None) -> int:
 
         if args.command == "verify-examples":
             report = run_public_example_verification(args.root)
+            if args.output:
+                _write_new_json(args.output, report)
             if args.as_json:
                 _dump(report)
             else:
+                print(f"version: {report['version']}")
                 print(f"valid: {'yes' if report['valid'] else 'no'}")
                 print(f"checks: {report['summary']['check_count']}")
                 print(f"passed_checks: {report['summary']['passed_check_count']}")
@@ -190,6 +200,8 @@ def main(argv: list[str] | None = None) -> int:
                     for warning in check["warnings"]:
                         print(f"warning: {warning}")
                 print(f"boundary: {report['boundary']}")
+                if args.output:
+                    print("report_written: yes")
             return 0 if report["valid"] else 2
 
         if args.command == "list-actions":

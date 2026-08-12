@@ -1,5 +1,6 @@
 """CineThread public Python API."""
 
+from ._version import __version__
 from .actions import compile_action_request, list_actions, load_action_library
 from .contract import ValidationResult, load_plan, validate_plan, validate_plan_file
 from .prompt import validate_prompt_pack, validate_prompt_pack_file
@@ -10,6 +11,7 @@ from .workflow import validate_workflow, validate_workflow_file
 
 __all__ = [
     "ValidationResult",
+    "__version__",
     "compile_action_request",
     "find_project_root",
     "list_actions",
@@ -27,5 +29,3 @@ __all__ = [
     "validate_workflow",
     "validate_workflow_file",
 ]
-
-__version__ = "0.2.1"

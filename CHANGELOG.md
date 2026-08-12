@@ -1,5 +1,11 @@
 # CineThread Changelog
 
+## [0.2.2] - 2026-08-12
+
+- Added a package version field and safe JSON report export to `verify-examples`, plus `aigc-director-kit --version`.
+- Added a structured Verified run feedback Issue Form and a 60-second trial guide for actual user testing.
+- Changed CI to test an ordinary non-editable package installation and the installed CLI entrypoint.
+
 ## [0.2.1] - 2026-08-12
 
 - Added `verify-examples`, a cross-platform, privacy-safe one-command verification report for every public example.

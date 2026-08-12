@@ -13,16 +13,17 @@ repository folder:
 
 ```powershell
 # Windows terminal (when the Python launcher is installed)
-py -3 -m aigc_director_kit verify-examples --json
+py -3 -m aigc_director_kit verify-examples --json --output cinethread-verify.json
 
 # macOS or Linux
-python3 -m aigc_director_kit verify-examples --json
+python3 -m aigc_director_kit verify-examples --json --output cinethread-verify.json
 ```
 
 It checks every public plan, workflow, prompt-pack, QC-boundary, action, and
 runtime-handoff example, and returns a privacy-safe report with relative paths
 only. It does not render or generate media. For a real bug report, review the
-output first and use the [verified feedback template](docs/feedback-template.md).
+output first and use the [60-second trial guide](docs/try-it.md) or the
+[Verified run feedback](https://github.com/cyou1314/cinethread/issues/new/choose) form.
 Windows users who do not know which Python command to use can instead double-click
 [`run_examples.bat`](run_examples.bat); it detects common Python installations.
 
@@ -77,10 +78,10 @@ observed evidence from an available artifact.
 ## Contribute and report a real run
 
 Use the [contribution guide](CONTRIBUTING.md), [Code of Conduct](CODE_OF_CONDUCT.md),
-and [verified feedback template](docs/feedback-template.md). Bug reports and
-feature requests use structured GitHub forms so that environment, commands,
-and evidence boundaries are clear. A maintainer's alternate account may report
-a real bug, but it is not independent adoption evidence.
+and [verified feedback template](docs/feedback-template.md). Bug reports,
+feature requests, and verified run feedback use structured GitHub forms so that
+environment, commands, and evidence boundaries are clear. A maintainer's
+alternate account may report a real bug, but it is not independent adoption evidence.
 
 [![CI](https://github.com/cyou1314/cinethread/actions/workflows/ci.yml/badge.svg)](https://github.com/cyou1314/cinethread/actions/workflows/ci.yml)
 
@@ -114,7 +115,7 @@ Windows 用户也可以直接双击 [`run_examples.bat`](run_examples.bat) 查�
 命令行方式：
 
 ```powershell
-python -m aigc_director_kit verify-examples --json
+python -m aigc_director_kit verify-examples --json --output cinethread-verify.json
 python -m aigc_director_kit validate-plan examples/shot_plan.json
 python -m aigc_director_kit list-actions --library examples/action_library.json --query 跑
 python -m aigc_director_kit compile-action `
@@ -127,6 +128,8 @@ python -m aigc_director_kit compile-action `
 
 ```powershell
 python -m pip install -e .
+aigc-director-kit --version
+aigc-director-kit verify-examples --root . --output cinethread-verify.json
 aigc-director-kit validate-plan examples/shot_plan.json
 ```
 

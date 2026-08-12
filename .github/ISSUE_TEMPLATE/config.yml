@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Verified run-feedback template
-    url: https://github.com/cyou1314/cinethread/blob/main/docs/feedback-template.md
-    about: Use this format only after a real run. State whether you are independent from the maintainer.
+  - name: 60-second trial guide
+    url: https://github.com/cyou1314/cinethread/blob/main/docs/try-it.md
+    about: Run the public examples before opening a Bug, Feature, or Verified run feedback Issue.

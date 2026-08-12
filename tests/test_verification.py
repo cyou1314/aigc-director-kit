@@ -3,6 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from aigc_director_kit import __version__
 from aigc_director_kit.verification import find_project_root, run_public_example_verification
 
 
@@ -14,6 +15,7 @@ class PublicExampleVerificationTests(unittest.TestCase):
         report = run_public_example_verification(ROOT)
 
         self.assertTrue(report["valid"])
+        self.assertEqual(report["version"], __version__)
         self.assertEqual(report["summary"], {"check_count": 11, "passed_check_count": 11})
         self.assertNotIn(str(ROOT), json.dumps(report, ensure_ascii=False))
         self.assertTrue(all(check["valid"] for check in report["checks"]))
