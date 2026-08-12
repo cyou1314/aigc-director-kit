@@ -1,0 +1,48 @@
+{
+  "contract": "aigc-director-action-library",
+  "version": 1,
+  "catalog_revision": 1,
+  "description": "Descriptor-only example catalog. Runtime adapters provide actual motion assets.",
+  "actions": [
+    {
+      "id": "walk_turn_right",
+      "display_name": "向右行走转身",
+      "category": "locomotion",
+      "duration_s": 2.4,
+      "aliases": ["向右走", "右转", "行走转向"],
+      "tags": ["走路", "转身", "locomotion"],
+      "source_type": "descriptor_only",
+      "root_motion": true
+    },
+    {
+      "id": "run_quick_stop",
+      "display_name": "跑步急停",
+      "category": "locomotion",
+      "duration_s": 1.8,
+      "aliases": ["快速跑步", "急停", "跑到停下"],
+      "tags": ["跑", "急停", "locomotion"],
+      "source_type": "descriptor_only",
+      "root_motion": true
+    },
+    {
+      "id": "front_kick",
+      "display_name": "前踢",
+      "category": "combat",
+      "duration_s": 1.2,
+      "aliases": ["正踢", "踢击"],
+      "tags": ["攻击", "腿", "combat"],
+      "source_type": "descriptor_only",
+      "root_motion": false
+    },
+    {
+      "id": "reach_lantern",
+      "display_name": "伸手拿灯笼",
+      "category": "interaction",
+      "duration_s": 1.5,
+      "aliases": ["伸手", "拿灯笼", "取物"],
+      "tags": ["手势", "道具", "interaction"],
+      "source_type": "descriptor_only",
+      "root_motion": false
+    }
+  ]
+}

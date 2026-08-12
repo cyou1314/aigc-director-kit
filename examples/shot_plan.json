@@ -1,0 +1,82 @@
+{
+  "contract": "aigc-director-shot-plan",
+  "version": 1,
+  "project": "lantern-bridge",
+  "fps": 24,
+  "resolution": {
+    "width": 1280,
+    "height": 720
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "duration_s": 4,
+      "intent": "建立人物从暗处走向灯光的方向",
+      "evidence": "designed",
+      "entry_state": {
+        "actors": ["scout"],
+        "screen_axis": "left-to-right",
+        "prop": "lantern-held"
+      },
+      "exit_state": {
+        "actors": ["scout"],
+        "screen_axis": "left-to-right",
+        "prop": "lantern-held"
+      },
+      "attention_order": ["lantern", "scout", "bridge"] ,
+      "beats": ["暗处出现", "向前移动", "灯光显露桥面"],
+      "camera": {
+        "rig": "dolly",
+        "job": "保持人物在前景并逐步显露桥面",
+        "focal_length_mm": 36,
+        "path": [
+          {
+            "time_s": 0,
+            "position": [0, -4, 1.6],
+            "look_at": [0, 0, 1.2]
+          },
+          {
+            "time_s": 4,
+            "position": [0, -1, 1.6],
+            "look_at": [0, 2, 1.2]
+          }
+        ]
+      },
+      "next_handle": "以灯笼位于画面右侧的尾状态切入下一镜"
+    },
+    {
+      "id": "S02",
+      "duration_s": 3,
+      "intent": "把注意力从灯笼交给桥面前方",
+      "evidence": "designed",
+      "entry_state": {
+        "actors": ["scout"],
+        "screen_axis": "left-to-right",
+        "prop": "lantern-held"
+      },
+      "exit_state": {
+        "actors": ["scout"],
+        "screen_axis": "left-to-right",
+        "prop": "lantern-held",
+        "attention": "bridge-end"
+      },
+      "camera": {
+        "rig": "controlled_handheld",
+        "job": "沿屏幕轴线轻微跟随并把桥端留在视线前方",
+        "path": [
+          {
+            "time_s": 0,
+            "position": [0, -1, 1.6],
+            "look_at": [0, 2, 1.2]
+          },
+          {
+            "time_s": 3,
+            "position": [0.2, 1, 1.65],
+            "look_at": [0, 4, 1.2]
+          }
+        ]
+      },
+      "next_handle": "保留桥端方向和人物前进方向，交给下一段场景"
+    }
+  ]
+}

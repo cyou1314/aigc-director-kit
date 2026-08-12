@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:aigc-director-kit:shot-plan:v1",
+  "title": "AIGC Director Shot Plan v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["contract", "version", "project", "fps", "resolution", "shots"],
+  "properties": {
+    "contract": {"const": "aigc-director-shot-plan"},
+    "version": {"const": 1},
+    "project": {"type": "string", "minLength": 1},
+    "fps": {"type": "number", "minimum": 1, "maximum": 120},
+    "resolution": {
+      "type": "object",
+      "required": ["width", "height"],
+      "properties": {
+        "width": {"type": "integer", "minimum": 16, "maximum": 16384},
+        "height": {"type": "integer", "minimum": 16, "maximum": 16384}
+      }
+    },
+    "shots": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {"$ref": "#/$defs/shot"}
+    }
+  },
+  "$defs": {
+    "state": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "object", "minProperties": 1}]},
+    "vec3": {"type": "array", "prefixItems": [{"type": "number"}, {"type": "number"}, {"type": "number"}], "minItems": 3, "maxItems": 3},
+    "cameraPoint": {
+      "type": "object",
+      "required": ["time_s", "position"],
+      "properties": {"time_s": {"type": "number", "minimum": 0}, "position": {"$ref": "#/$defs/vec3"}, "look_at": {"$ref": "#/$defs/vec3"}}
+    },
+    "camera": {
+      "type": "object",
+      "required": ["rig", "job", "path"],
+      "properties": {
+        "rig": {"enum": ["tripod", "dolly", "crane", "gimbal", "controlled_handheld", "free"]},
+        "job": {"type": "string", "minLength": 1},
+        "focal_length_mm": {"type": "number", "minimum": 10, "maximum": 200},
+        "focus_distance_m": {"type": "number", "minimum": 0.01, "maximum": 10000},
+        "path": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/cameraPoint"}}
+      }
+    },
+    "shot": {
+      "type": "object",
+      "required": ["id", "duration_s", "intent", "evidence", "entry_state", "exit_state", "camera", "next_handle"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"},
+        "duration_s": {"type": "number", "minimum": 0.25, "maximum": 60},
+        "intent": {"type": "string", "minLength": 1},
+        "evidence": {"enum": ["observed", "inferred", "designed"]},
+        "entry_state": {"$ref": "#/$defs/state"},
+        "exit_state": {"$ref": "#/$defs/state"},
+        "attention_order": {"type": "array", "minItems": 1, "maxItems": 5, "items": {"type": "string", "minLength": 1}},
+        "beats": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "continuous_take": {"type": "boolean"},
+        "camera": {"$ref": "#/$defs/camera"},
+        "next_handle": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
