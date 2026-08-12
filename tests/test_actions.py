@@ -25,6 +25,14 @@ class ActionTests(unittest.TestCase):
         self.assertTrue(result["modifiers"]["in_place"])
         self.assertEqual(result["matched_actions"][0]["root_motion_scale"], 0.0)
 
+    def test_compile_english_action_with_modifiers(self) -> None:
+        result = compile_action_request("run quick stop, blend 0.2s, fast, in place", self.library)
+        self.assertTrue(result["valid"])
+        self.assertEqual([item["id"] for item in result["matched_actions"]], ["run_quick_stop"])
+        self.assertEqual(result["modifiers"]["speed_scale"], 1.25)
+        self.assertEqual(result["modifiers"]["blend_s"], 0.2)
+        self.assertTrue(result["modifiers"]["in_place"])
+
     def test_compile_two_actions_in_text_order(self) -> None:
         result = compile_action_request("先伸手拿灯笼，再向右走，过渡0.3秒", self.library)
         self.assertTrue(result["valid"])

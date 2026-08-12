@@ -25,7 +25,11 @@ AIGC 视频返工经常不是“不会生成”，而是镜头合同没有锁定
 
 ## 快速开始
 
-无需安装第三方运行时：
+无需安装第三方运行时。
+
+Windows 用户也可以直接双击 [`run_examples.bat`](run_examples.bat) 查看示例结果。脚本只使用本仓库源码；如果电脑没有 Python 3.10 或更高版本，按窗口提示安装 Python 后再次双击。
+
+命令行方式：
 
 ```powershell
 python -m aigc_director_kit validate-plan examples/shot_plan.json

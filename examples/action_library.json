@@ -9,7 +9,7 @@
       "display_name": "向右行走转身",
       "category": "locomotion",
       "duration_s": 2.4,
-      "aliases": ["向右走", "右转", "行走转向"],
+      "aliases": ["向右走", "右转", "行走转向", "walk right", "turn right"],
       "tags": ["走路", "转身", "locomotion"],
       "source_type": "descriptor_only",
       "root_motion": true
@@ -19,7 +19,7 @@
       "display_name": "跑步急停",
       "category": "locomotion",
       "duration_s": 1.8,
-      "aliases": ["快速跑步", "急停", "跑到停下"],
+      "aliases": ["快速跑步", "急停", "跑到停下", "run quick stop", "quick stop"],
       "tags": ["跑", "急停", "locomotion"],
       "source_type": "descriptor_only",
       "root_motion": true
@@ -29,7 +29,7 @@
       "display_name": "前踢",
       "category": "combat",
       "duration_s": 1.2,
-      "aliases": ["正踢", "踢击"],
+      "aliases": ["正踢", "踢击", "front kick", "kick"],
       "tags": ["攻击", "腿", "combat"],
       "source_type": "descriptor_only",
       "root_motion": false
@@ -39,7 +39,7 @@
       "display_name": "伸手拿灯笼",
       "category": "interaction",
       "duration_s": 1.5,
-      "aliases": ["伸手", "拿灯笼", "取物"],
+      "aliases": ["伸手", "拿灯笼", "取物", "reach lantern", "take lantern"],
       "tags": ["手势", "道具", "interaction"],
       "source_type": "descriptor_only",
       "root_motion": false

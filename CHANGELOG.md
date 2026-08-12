@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.2] - 2026-08-12
+
+- Added a Windows double-click launcher for the public examples.
+- Added a no-install quick-start path that runs directly from `src`.
+- Added English aliases to the example action catalog so the launcher works reliably across Windows console code pages.
+
 ## [0.1.1] - 2026-08-12
 
 - Added a GitHub Actions matrix for Python 3.10–3.13.
