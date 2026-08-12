@@ -1,0 +1,49 @@
+name: Feature request
+description: Propose a bounded, public improvement grounded in a real workflow need.
+title: "feature: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        CineThread keeps its core deterministic and standard-library-only.
+        Describe a real workflow need; do not include private media, credentials,
+        or unlicensed assets.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: What failed or stayed ambiguous in a real workflow?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Include the contract, CLI, adapter, or documentation boundary that should change.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Explain why a documentation change, external adapter, or existing contract is insufficient.
+  - type: dropdown
+    id: evidence
+    attributes:
+      label: Evidence status
+      options:
+        - Real run or user workflow observed
+        - Designed proposal only
+    validations:
+      required: true
+  - type: checkboxes
+    id: safeguards
+    attributes:
+      label: Safeguards
+      options:
+        - label: This request does not depend on private assets, credentials, or paid generation.
+          required: true
+        - label: I am not presenting a maintainer alternate account as independent adoption.
+          required: true

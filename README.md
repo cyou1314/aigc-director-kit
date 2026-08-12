@@ -54,6 +54,14 @@ Prompt validation does not generate an image or video. QC validation does not
 open or interpret media; a `pass` or `fail` result requires explicitly marked
 observed evidence from an available artifact.
 
+## Contribute and report a real run
+
+Use the [contribution guide](CONTRIBUTING.md), [Code of Conduct](CODE_OF_CONDUCT.md),
+and [verified feedback template](docs/feedback-template.md). Bug reports and
+feature requests use structured GitHub forms so that environment, commands,
+and evidence boundaries are clear. A maintainer's alternate account may report
+a real bug, but it is not independent adoption evidence.
+
 [![CI](https://github.com/cyou1314/cinethread/actions/workflows/ci.yml/badge.svg)](https://github.com/cyou1314/cinethread/actions/workflows/ci.yml)
 
 面向 AI 动画、AI 漫剧和分镜预演的轻量合同工具包：把镜头任务、相机路径、入/出镜状态和动作选择写成可验证、可复现的 JSON。

@@ -1,0 +1,68 @@
+name: Bug report
+description: Report a reproducible contract, CLI, or example-run problem.
+title: "bug: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for testing CineThread. Please report only an actual run and
+        remove private media, credentials, cookies, and local absolute paths.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Release tag, package version, or commit SHA.
+      placeholder: v0.2.0
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, and installation method.
+      placeholder: Windows 11, Python 3.12, editable install
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Exact command and sanitized input
+      description: Include a minimal command and a sanitized JSON fixture when relevant.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: Include the full error or validation output.
+    validations:
+      required: true
+  - type: dropdown
+    id: relationship
+    attributes:
+      label: Relationship to the maintainer
+      options:
+        - Independent user
+        - Maintainer
+        - Maintainer alternate account
+        - Collaborator
+    validations:
+      required: true
+  - type: checkboxes
+    id: safeguards
+    attributes:
+      label: Safeguards
+      options:
+        - label: I removed credentials, private assets, and local absolute paths.
+          required: true
+        - label: I ran the command above myself.
+          required: true
