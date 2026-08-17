@@ -71,6 +71,28 @@ output contract, and evidence semantics. It verifies required producers and
 high-confidence public-safety patterns, but it cannot determine whether all
 free-form prose is anonymous. Manual privacy review remains required.
 
+### Stable machine-readable issues
+
+Every JSON validation result keeps the existing `errors` and `warnings` arrays
+and also exposes an additive `issues` array. Each issue has the stable shape
+`severity`, `code`, `path`, and `message`:
+
+```json
+{
+  "severity": "error",
+  "code": "out_of_range",
+  "path": "shots[0].camera.path[1].time_s",
+  "message": "shots[0].camera.path[1].time_s must be inside the shot duration."
+}
+```
+
+Use `code` and `path` for automation and repair routing; use `message` for a
+human-readable explanation. A relationship warning may have a null `path`.
+The legacy arrays are intentionally preserved, so existing scripts do not need
+to migrate immediately. Fix the smallest reported field or relationship, then
+rerun the validator. The issue report still proves only contract validation and
+does not prove rendering, media inspection, QC, or public adoption.
+
 ## Run the public handoff
 
 Without an action catalog, the workflow is checked structurally and action

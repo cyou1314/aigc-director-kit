@@ -1,5 +1,11 @@
 # CineThread Changelog
 
+## [0.2.5] - 2026-08-17
+
+- Added additive structured validation `issues` with stable severity, code, path, and message fields.
+- Kept the existing `errors` and `warnings` arrays unchanged for compatibility.
+- Added structured issues to the privacy-safe `verify-examples` report and documented the repair workflow for Skill and automation consumers.
+
 ## [0.2.4] - 2026-08-12
 
 - Added `validate-skill-integration` to cross-check a metadata adapter against a project workflow.

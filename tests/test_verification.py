@@ -19,6 +19,8 @@ class PublicExampleVerificationTests(unittest.TestCase):
         self.assertEqual(report["summary"], {"check_count": 13, "passed_check_count": 13})
         self.assertNotIn(str(ROOT), json.dumps(report, ensure_ascii=False))
         self.assertTrue(all(check["valid"] for check in report["checks"]))
+        self.assertTrue(all("issues" in check for check in report["checks"]))
+        self.assertTrue(all(check["issues"] == [] for check in report["checks"]))
 
     def test_accepts_an_explicit_checkout_root(self) -> None:
         self.assertEqual(find_project_root(ROOT), ROOT)
@@ -38,6 +40,9 @@ class PublicExampleVerificationTests(unittest.TestCase):
 
             self.assertFalse(report["valid"])
             self.assertNotIn(str(temporary_root), json.dumps(report, ensure_ascii=False))
+            failed_checks = [check for check in report["checks"] if not check["valid"]]
+            self.assertTrue(failed_checks)
+            self.assertTrue(all(check["issues"] for check in failed_checks))
 
 
 if __name__ == "__main__":

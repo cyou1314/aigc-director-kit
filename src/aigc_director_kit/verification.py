@@ -59,6 +59,13 @@ def _validation_check(
             "summary": result.summary,
             "errors": [_sanitize_text(error, root) for error in result.errors],
             "warnings": [_sanitize_text(warning, root) for warning in result.warnings],
+            "issues": [
+                {
+                    **issue,
+                    "message": _sanitize_text(issue.get("message", ""), root),
+                }
+                for issue in result.issues
+            ],
         }
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         return {
@@ -68,6 +75,14 @@ def _validation_check(
             "summary": {},
             "errors": [_sanitize_text(exc, root)],
             "warnings": [],
+            "issues": [
+                {
+                    "severity": "error",
+                    "code": "verification_exception",
+                    "path": "$",
+                    "message": _sanitize_text(exc, root),
+                }
+            ],
         }
 
 
@@ -77,7 +92,9 @@ def _callable_check(
     run: Callable[[], dict[str, Any]],
 ) -> dict[str, Any]:
     try:
-        return run()
+        result = run()
+        result.setdefault("issues", [])
+        return result
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         return {
             "id": check_id,
@@ -85,6 +102,14 @@ def _callable_check(
             "summary": {},
             "errors": [_sanitize_text(exc, root)],
             "warnings": [],
+            "issues": [
+                {
+                    "severity": "error",
+                    "code": "verification_exception",
+                    "path": "$",
+                    "message": _sanitize_text(exc, root),
+                }
+            ],
         }
 
 
@@ -99,6 +124,7 @@ def _json_fixture_check(root: Path) -> dict[str, Any]:
             "summary": {"parsed_file_count": len(paths)},
             "errors": [],
             "warnings": [],
+            "issues": [],
         }
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         return {
@@ -107,6 +133,14 @@ def _json_fixture_check(root: Path) -> dict[str, Any]:
             "summary": {},
             "errors": [_sanitize_text(exc, root)],
             "warnings": [],
+            "issues": [
+                {
+                    "severity": "error",
+                    "code": "verification_exception",
+                    "path": "$",
+                    "message": _sanitize_text(exc, root),
+                }
+            ],
         }
 
 

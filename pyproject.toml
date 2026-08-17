@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aigc-director-kit"
-version = "0.2.4"
+version = "0.2.5"
 description = "CineThread: deterministic creative handoffs for AI animation, storyboards, and previs."
 readme = "README.md"
 requires-python = ">=3.10"

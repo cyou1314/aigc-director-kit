@@ -131,6 +131,11 @@ class SkillIntegrationTests(unittest.TestCase):
         self.assertNotIn("not-a-real-key", errors)
         self.assertNotIn("editor@example.com", errors)
 
+        issue_codes = {issue["code"] for issue in result.issues}
+        self.assertIn("public_safety_credential", issue_codes)
+        self.assertIn("public_safety_email", issue_codes)
+        self.assertTrue(all(issue["severity"] == "error" for issue in result.issues))
+
 
 if __name__ == "__main__":
     unittest.main()

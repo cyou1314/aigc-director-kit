@@ -15,6 +15,114 @@ SUPPORTED_RIGS = frozenset(
     {"tripod", "dolly", "crane", "gimbal", "controlled_handheld", "free"}
 )
 SHOT_ID_PATTERN = re.compile(r"^[A-Za-z][A-Za-z0-9_-]*$")
+_FIELD_PATH_PATTERN = re.compile(
+    r"^(?P<path>[A-Za-z_][A-Za-z0-9_-]*(?:\[\d+\])?"
+    r"(?:\.[A-Za-z_][A-Za-z0-9_-]*(?:\[\d+\])?)*)\b"
+)
+
+
+def _issue_path(message: str) -> str | None:
+    """Extract a stable JSON-like path without changing legacy messages."""
+
+    text = message.strip()
+    scope: str | None = None
+    for prefix in ("adapter: ", "workflow: ", "shot_plan: ", "prompt_pack: ", "qc_report: "):
+        if text.startswith(prefix):
+            scope = prefix[:-2]
+            text = text[len(prefix) :]
+            break
+
+    if text.startswith("public safety: "):
+        text = text[len("public safety: ") :]
+    elif text.startswith("integration: "):
+        stage_match = re.search(r"stage '([^']+)'", text)
+        if stage_match:
+            return f"stages.{stage_match.group(1)}"
+        if "required output '" in text:
+            output_match = re.search(r"required output '([^']+)'", text)
+            if output_match:
+                return f"outputs.{output_match.group(1)}"
+        scope = "integration"
+        text = text[len("integration: ") :]
+
+    if " -> " in text and text.endswith("handoff."):
+        return None
+
+    match = _FIELD_PATH_PATTERN.match(text)
+    if not match:
+        return "$" if text.startswith("The ") else None
+    path = match.group("path")
+    if scope and not path.startswith(f"{scope}."):
+        return f"{scope}.{path}"
+    return path
+
+
+def _issue_code(message: str, severity: str) -> str:
+    """Map current validator wording to stable, low-cardinality issue codes."""
+
+    text = message.casefold()
+    if text.startswith("contract must"):
+        return "contract_mismatch"
+    if text.startswith("version must"):
+        return "version_mismatch"
+    if "public safety" in text:
+        if "credential" in text:
+            return "public_safety_credential"
+        if "email" in text:
+            return "public_safety_email"
+        if "path" in text:
+            return "public_safety_path"
+        return "public_safety"
+    if "was not compiled" in text:
+        return "action_not_compiled"
+    if "could not be compiled" in text:
+        return "action_unmatched"
+    if "not declared by the adapter" in text:
+        return "integration_undeclared_stage"
+    if "required output" in text:
+        return "integration_missing_producer"
+    if "skill label" in text:
+        return "integration_skill_mismatch"
+    if "output contract" in text:
+        return "integration_output_mismatch"
+    if "evidence semantics" in text:
+        return "integration_evidence_mismatch"
+    if "action_requests" in text and "outputs" in text:
+        return "integration_action_producer_mismatch"
+    if "differs from" in text:
+        return "continuity_warning"
+    if "duplicated" in text or "duplicate" in text:
+        return "duplicate"
+    if "cannot contain more" in text or "at most" in text:
+        return "limit_exceeded"
+    if "must be one of" in text:
+        return "invalid_choice"
+    if "must match" in text or "lowercase letters" in text:
+        return "invalid_format"
+    if "pass/fail" in text or "observed evidence" in text or "artifact.available" in text:
+        return "evidence_requirement"
+    if "must be a non-empty" in text or "must be a non-empty string" in text:
+        return "required"
+    if "must be an object" in text or "must be an array" in text or "must be boolean" in text:
+        return "invalid_type"
+    if "must be between" in text or "must be inside" in text or "finite number" in text:
+        return "out_of_range"
+    if "must be positive" in text:
+        return "out_of_range"
+    if "must be " in text:
+        return "invalid_value"
+    if "cannot contain" in text or "must reference" in text:
+        return "cross_field_constraint"
+    return "validation_warning" if severity == "warning" else "validation_error"
+
+
+def _make_issue(severity: str, message: str) -> dict[str, Any]:
+    return {
+        "severity": severity,
+        "code": _issue_code(message, severity),
+        "path": _issue_path(message),
+        "message": message,
+    }
 
 
 @dataclass
@@ -25,6 +133,17 @@ class ValidationResult:
     errors: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
     summary: dict[str, Any] = field(default_factory=dict)
+    issues: list[dict[str, Any]] = field(default_factory=list)
+
+    def __post_init__(self) -> None:
+        """Add structured issues while keeping the original fields compatible."""
+
+        if not self.issues:
+            self.issues = [
+                _make_issue("error", message) for message in self.errors
+            ] + [
+                _make_issue("warning", message) for message in self.warnings
+            ]
 
     def as_dict(self) -> dict[str, Any]:
         return {
@@ -33,6 +152,7 @@ class ValidationResult:
             "valid": self.valid,
             "errors": list(self.errors),
             "warnings": list(self.warnings),
+            "issues": [dict(issue) for issue in self.issues],
             "summary": dict(self.summary),
         }
 

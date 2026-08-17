@@ -14,8 +14,9 @@
   common Python install locations.
 - [ ] Add an optional Blender adapter that consumes the handoff and records
   real previs evidence.
-- [ ] Add field-level error codes and keep the JSON output stable across
-  releases.
+- [x] Add field-level error codes and keep the JSON output stable across
+  releases through additive `issues` entries and backward-compatible legacy
+  error arrays.
 
 ## v0.1 — 当前范围
 

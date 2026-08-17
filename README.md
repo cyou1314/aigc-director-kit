@@ -73,8 +73,13 @@ python -m aigc_director_kit validate-skill-integration `
 
 This cross-check rejects undeclared workflow stages, mismatched Skill labels,
 output contracts or evidence semantics, action requests assigned to the wrong
-producer, and high-confidence leaks in both files such as credentials, emails, and
-absolute local paths. A passing result still requires manual privacy review.
+producer, and high-confidence leaks in both files such as credentials, emails,
+and absolute local paths. A passing result still requires manual privacy review.
+
+JSON validation results also include an additive `issues` array with stable
+`severity`, `code`, `path`, and `message` fields. Automation can route repairs
+by `code` and `path`, while existing consumers may continue using `errors` and
+`warnings` unchanged.
 
 To create one packet for an optional runtime adapter:
 

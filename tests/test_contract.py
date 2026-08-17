@@ -22,6 +22,10 @@ class ContractTests(unittest.TestCase):
         result = validate_plan(plan)
         self.assertFalse(result.valid)
         self.assertTrue(any("time_s" in error for error in result.errors))
+        issue = next(item for item in result.issues if item["path"].endswith("time_s"))
+        self.assertEqual(issue["severity"], "error")
+        self.assertEqual(issue["code"], "out_of_range")
+        self.assertEqual(issue["path"], "shots[0].camera.path[1].time_s")
 
     def test_state_mismatch_is_a_warning_not_an_error(self) -> None:
         plan = json.loads((ROOT / "examples" / "shot_plan.json").read_text(encoding="utf-8"))
@@ -30,6 +34,21 @@ class ContractTests(unittest.TestCase):
         self.assertTrue(result.valid, result.errors)
         self.assertEqual(len(result.warnings), 1)
         self.assertIn("S01 -> S02", result.warnings[0])
+        self.assertEqual(result.issues[0]["severity"], "warning")
+        self.assertEqual(result.issues[0]["code"], "continuity_warning")
+        self.assertIsNone(result.issues[0]["path"])
+
+    def test_validation_result_keeps_legacy_fields_and_adds_issues(self) -> None:
+        result = validate_plan({})
+        payload = result.as_dict()
+        self.assertEqual(
+            list(payload),
+            ["contract", "version", "valid", "errors", "warnings", "issues", "summary"],
+        )
+        self.assertEqual(payload["errors"], result.errors)
+        self.assertEqual(payload["warnings"], result.warnings)
+        self.assertEqual(payload["issues"], result.issues)
+        self.assertTrue(all(set(issue) == {"severity", "code", "path", "message"} for issue in result.issues))
 
     def test_duplicate_shot_id_is_rejected(self) -> None:
         plan = json.loads((ROOT / "examples" / "shot_plan.json").read_text(encoding="utf-8"))
