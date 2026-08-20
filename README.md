@@ -1,10 +1,52 @@
 # CineThread
 
-> Deterministic creative handoffs for AI animation, storyboards, and previs.
+> Turn fragile AI video ideas into verifiable production handoffs.
+>
+> 把模糊的镜头想法，变成可验证、可复现的制作交接。
+
+CineThread is a lightweight, standard-library Python toolkit for AI animation,
+AI manga, storyboards, and previs. It turns shot intent, camera paths,
+continuity states, and bounded action choices into contracts you can validate
+before rendering—so prompt drift becomes a visible issue instead of expensive
+rework.
 
 `CineThread` is the public product name. The Python package, CLI command, and
 versioned JSON contract identifiers remain `aigc-director-kit` in the 0.x
 series for compatibility.
+
+[Try it in 60 seconds](docs/try-it.md) ·
+[Latest release](https://github.com/cyou1314/cinethread/releases/tag/v0.2.5) ·
+[Report a real run](https://github.com/cyou1314/cinethread/issues/new/choose)
+
+[![CI](https://github.com/cyou1314/cinethread/actions/workflows/ci.yml/badge.svg)](https://github.com/cyou1314/cinethread/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/cyou1314/cinethread?display_name=tag)](https://github.com/cyou1314/cinethread/releases/latest)
+
+## Why CineThread?
+
+AI video rework often starts before generation:
+
+- the shot duration or camera path is unclear;
+- the previous shot's tail state never reaches the next shot;
+- a natural-language action request gets silently turned into invented motion;
+- prompt design, previs, generation, and QC are treated as one unsupported claim.
+
+CineThread makes those boundaries visible before a render is paid for or handed
+to the next tool.
+
+## What you can do today
+
+- Lock shot contracts: duration, camera keyframes, entry/exit state, and next handle.
+- Reject unknown actions; only compile entries that exist in the declared catalog.
+- Validate sanitized Skill/workflow handoffs and route structured issues by field.
+- Keep contract checks, runtime dry-runs, rendering, and QC as separate evidence layers.
+
+## Proof in this repository
+
+- `v0.2.5` is released on GitHub.
+- 55 unit tests pass locally.
+- 13/13 public example checks pass.
+- CI covers Python 3.10–3.13.
+- The runtime uses only the Python standard library; Blender and paid APIs are not required.
 
 ## Verify a checkout in one command
 
@@ -116,11 +158,9 @@ feature requests, and verified run feedback use structured GitHub forms so that
 environment, commands, and evidence boundaries are clear. A maintainer's
 alternate account may report a real bug, but it is not independent adoption evidence.
 
-[![CI](https://github.com/cyou1314/cinethread/actions/workflows/ci.yml/badge.svg)](https://github.com/cyou1314/cinethread/actions/workflows/ci.yml)
-
 面向 AI 动画、AI 漫剧和分镜预演的轻量合同工具包：把镜头任务、相机路径、入/出镜状态和动作选择写成可验证、可复现的 JSON。
 
-这是一个从真实 AIGC 导演预演工作流中抽出的公开 MVP。核心运行时只依赖 Python 标准库，不要求安装 Blender，也不会联网或触发付费生成。
+这是一个从真实 AIGC 导演预演工作流中抽出的公开 MVP：先把最容易返工的镜头交接问题暴露出来，再把可复用的约束交给后续工具。核心运行时只依赖 Python 标准库，不要求安装 Blender，也不会联网或触发付费生成。
 
 ## 它解决什么问题
 
